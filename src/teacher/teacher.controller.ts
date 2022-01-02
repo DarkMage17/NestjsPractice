@@ -1,17 +1,21 @@
 import { Controller, Get, Param, Put } from "@nestjs/common";
 import { FindTeacherResponseDto } from "./dto/teacher.dto";
+import { TeacherService } from "./teacher.service";
 
 @Controller('teachers')
 export class TeacherController{
+
+    constructor(private readonly teacherService: TeacherService){};
+
     @Get()
     getTeachers(): FindTeacherResponseDto[]{
-        return "Get teachers"
+        return this.teacherService.getTeachers();
     }
 
     @Get('/:teacherId')
     getTeacher(
         @Param('teacherId') teacherId: string
     ): FindTeacherResponseDto{
-        return `Get teacher with ${teacherId}`
+        return this.teacherService.getTeacherById(teacherId);
     }
 }
